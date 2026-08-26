@@ -7,7 +7,7 @@
  * @version 1.0
  * @since   2024-06-10
  */
-package br.com.meslin;
+package br.com.lucas;
 
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -24,9 +24,9 @@ import java.util.Date;
 @ServerEndpoint(value = "/ws")
 public class WebSocketServer {
 
-    private Session session;
-    private static final Set<WebSocketServer> connections = new CopyOnWriteArraySet<>();
-    private static Server server;
+    private Session session;                /// Instância da sessão WebSocket associada a esta conexão.
+    private static final Set<WebSocketServer> connections = new CopyOnWriteArraySet<>();    /// Conjunto de conexões WebSocket ativas.
+    private static Server server;           /// Instância do servidor WebSocket.
 
     /**
      * Starts the WebSocket server.

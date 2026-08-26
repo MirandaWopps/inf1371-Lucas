@@ -7,11 +7,12 @@
  * @version 1.0
  * @since   2024-06-10
  */
-package br.com.meslin;
+package br.com.lucas;
 
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
+import org.apache.kafka.clients.consumer.ConsumerConfig;
 
 import java.time.Duration;
 import java.util.Collections;
@@ -20,14 +21,14 @@ import java.util.Properties;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import br.com.meslin.WebSocketServer;
+import br.com.lucas.WebSocketServer;
 
 public class ChatConsumer {
-    private static final String TOPIC = "chat-messages";
-    private static final String BOOTSTRAP_SERVERS = "kafka:9092";
-    private static final String GROUP_ID = "chat-consumer-group";
+    private static final String TOPIC = "chat-messages";            /// Nome do tópico Kafka do chat.
+    //private static final String BOOTSTRAP_SERVERS = "kafka:9092";   /// Endereços dos servidores Kafka.
+    private static final String GROUP_ID = "chat-consumer-group";   /// ID do grupo de consumidores Kafka.
 
-    private static final Logger logger = LoggerFactory.getLogger(ChatConsumer.class);
+    private static final Logger logger = LoggerFactory.getLogger(ChatConsumer.class);   /// Instância do logger para registrar informações e erros.
 
     /**
      * Main method to start the ChatConsumer and WebSocket server.
@@ -40,8 +41,8 @@ public class ChatConsumer {
     public static void main(String[] args) {
         logger.info("Starting Chat Consumer.");
         Properties props = new Properties();
-        props.put("bootstrap.servers", BOOTSTRAP_SERVERS);
-        props.put("group.id", GROUP_ID);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, System.getenv("KAFKA_BOOTSTRAP_SERVERS"));
+        props.put(ConsumerConfig.GROUP_ID_CONFIG, GROUP_ID);
         props.put("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.put("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
 
